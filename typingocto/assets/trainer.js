@@ -42,7 +42,7 @@
     const mode = cfg.mode;
     const lesson = mode === 'lesson' ? L.list[cfg.lesson - 1] : null;
     const opts = { dur: 30, words: 'common', punct: false, set: 'common' };
-    try { Object.assign(opts, JSON.parse(localStorage.getItem('to-opts-' + mode)) || {}); } catch (e) {}
+    try { Object.assign(opts, JSON.parse(localStorage.getItem('to-opts-' + mode)) || {}); } catch (e) {} if (cfg.dur) opts.dur = cfg.dur; if (cfg.words) opts.words = cfg.words; const durName = d => d < 60 ? d + '-second' : (d / 60) + '-minute';
 
     document.body.classList.add('fit');
     root.innerHTML = `<div class="tr">
@@ -90,9 +90,9 @@
         el('tOpts').innerHTML = `${lesson.id > 1 ? `<a class="btn" href="lesson.html?n=${lesson.id - 1}" title="Previous lesson">‹</a>` : ''}<span class="btn" title="Best result">${prev ? starsHTML(prev.stars) : '<span class="muted">Not done</span>'}</span>${lesson.id < 100 ? `<a class="btn" href="lesson.html?n=${lesson.id + 1}" title="Next lesson">›</a>` : ''}`;
       } else if (mode === 'test') {
         el('tBadge').textContent = 'Typing speed test';
-        el('tTitle').textContent = `${opts.dur}-second typing test`;
+        el('tTitle').textContent = `${durName(opts.dur)} typing test`;
         el('tDesc').textContent = 'The timer starts with your first key.';
-        el('tOpts').innerHTML = `<div class="seg" id="oDur">${[15, 30, 60, 120].map(d => `<button data-v="${d}" class="${opts.dur == d ? 'on' : ''}">${d < 60 ? d + 's' : d / 60 + 'm'}</button>`).join('')}</div>
+        el('tOpts').innerHTML = `<div class="seg" id="oDur">${[15, 30, 60, 120, 180, 300].map(d => `<button data-v="${d}" class="${opts.dur == d ? 'on' : ''}">${d < 60 ? d + 's' : d / 60 + 'm'}</button>`).join('')}</div>
           <div class="seg" id="oWords">${[['common', 'Easy'], ['advanced', 'Hard']].map(([v, t]) => `<button data-v="${v}" class="${opts.words === v ? 'on' : ''}">${t}</button>`).join('')}</div>
           <button class="btn ${opts.punct ? 'on' : ''}" id="oPunct" title="Add capitals and punctuation">Aa.,</button>`;
       } else if (mode === 'challenge') {
@@ -271,7 +271,7 @@
       el('tModal').classList.remove('hidden');
       el('mRetry').onclick = reset;
       const sh = el('mShare');
-      if (sh) sh.onclick = () => shareScore({ wpm, acc, mode, label: mode === 'lesson' ? `Lesson ${lesson.id}: ${lesson.title}` : mode === 'challenge' ? 'Weekly typing challenge' : `${opts.dur}-second typing test`, stars });
+      if (sh) sh.onclick = () => shareScore({ wpm, acc, mode, label: mode === 'lesson' ? `Lesson ${lesson.id}: ${lesson.title}` : mode === 'challenge' ? 'Weekly typing challenge' : `${durName(opts.dur)} typing test`, stars });
       const n = el('mNext'); if (n && n.tagName === 'BUTTON') n.onclick = reset;
       bubble(good ? `Yay! +${res.coins} coins. Can we buy something? 😋` : 'Don\'t worry, let\'s try once more!');
       pet(good ? 'happy' : 'ok');
