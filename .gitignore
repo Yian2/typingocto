@@ -1,0 +1,4 @@
+keybeat-v2/
+node_modules/
+.netlify/
+*.log
