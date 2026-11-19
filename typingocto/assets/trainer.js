@@ -204,7 +204,7 @@
     }
     function typed(ch) {
       if (ended) return;
-      if (!started) { started = Date.now(); iv = setInterval(tick, 100); }
+      if (!started) { started = Date.now(); iv = setInterval(tick, 100); TO.track('typing_start', { mode, lesson: lesson ? lesson.id : undefined }); }
       const exp = text[pos];
       if (exp === undefined) return;
       attempts++;

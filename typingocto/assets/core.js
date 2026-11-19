@@ -8,8 +8,10 @@
 
   /* ======== SITE SETTINGS ========
      ADS_ENABLED: set to true once Google AdSense approves the site (until then ad spaces are hidden).
-     GA_ID: your Google Analytics 4 id, e.g. 'G-XXXXXXX' (loads only after the visitor accepts cookies). */
-  const CONFIG = { ADS_ENABLED: false, ADSENSE_CLIENT: '', GA_ID: 'G-Y6RMEBDRNQ' };
+     GA_ID: your Google Analytics 4 id, e.g. 'G-XXXXXXX' (loads only after the visitor accepts cookies).
+     FIREBASE: public Firebase web config to enable OPTIONAL Google sign-in that syncs progress to Firestore.
+               null = guest mode only (progress stays in this browser). */
+  const CONFIG = { ADS_ENABLED: false, ADSENSE_CLIENT: '', GA_ID: 'G-Y6RMEBDRNQ', FIREBASE: null };
 
   // Base URL of the site (works from sub-folders like /blog/ and when opened from disk).
   const BASE = (typeof document !== 'undefined' && document.currentScript && document.currentScript.src) ? new URL('..', document.currentScript.src).href : '';
@@ -37,7 +39,17 @@
     S.pet = Object.assign(defaults().pet, S.pet || {});
     S.pet.eq = Object.assign(defaults().pet.eq, S.pet.eq || {});
   }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  const saveHooks = [];
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} saveHooks.forEach(f => { try { f(S); } catch (e) {} }); }
+  function onSave(f) { saveHooks.push(f); }
+  // Replace the whole state (used by cloud sync after merging local + account progress).
+  function replaceState(next) {
+    const d = defaults();
+    S = Object.assign(d, next || {});
+    S.pet = Object.assign(defaults().pet, S.pet || {});
+    S.pet.eq = Object.assign(defaults().pet.eq, S.pet.eq || {});
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+  }
   load();
 
   const $ = (s, r) => (r || document).querySelector(s);
@@ -258,6 +270,20 @@
     }
   }
   function track(name, params) { if (window.gtag) gtag('event', name, params || {}); }
+  // Blog -> activity clicks (GA4 event "blog_cta_click"): lets the SEO dashboard see which articles bring real users.
+  function trackBlogLinks() {
+    if (!/\/blog\//.test(location.pathname)) return;
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a'); if (!a) return;
+      const href = a.getAttribute('href') || '';
+      if (a.dataset.cta || /(lesson|typing-test|practice|challenge|inky|progress)[^/]*\.html/.test(href)) track('blog_cta_click', { link_url: href, article: location.pathname, cta_type: a.dataset.cta || 'inline' });
+    });
+  }
+  // Optional Google sign-in (progress sync). Loaded only when CONFIG.FIREBASE is set; guests are unaffected.
+  function cloud() {
+    if (!CONFIG.FIREBASE || BASE.startsWith('file:')) return;
+    import(new URL('assets/cloud.js', BASE).href).then(m => m.start(CONFIG.FIREBASE)).catch(e => console.warn('Cloud sync unavailable', e));
+  }
   function cookie() {
     if (S.consent) return;
     const d = document.createElement('div'); d.className = 'cookie'; d.setAttribute('role', 'dialog');
@@ -283,7 +309,7 @@
     hide() { if (tipEl) tipEl.style.display = 'none'; }
   };
 
-  function init(active) { header(active); footer(); ads(); cookie(); loadScripts(); }
+  function init(active) { header(active); footer(); ads(); cookie(); loadScripts(); trackBlogLinks(); cloud(); }
 
-  window.TO = { BRAND, CONFIG, BASE, link, week, track, get S() { return S; }, save, $, $$, esc, clamp, dayKey, ITEMS, item, fullness, setFull, mood, level, streak, bestStreak, petLine, daysSincePractice, recordSession, octo, init, header, refreshChip, ads, toast, tip };
+  window.TO = { BRAND, CONFIG, BASE, link, week, track, get S() { return S; }, save, $, $$, esc, clamp, dayKey, ITEMS, item, fullness, setFull, mood, level, streak, bestStreak, petLine, daysSincePractice, recordSession, octo, init, header, refreshChip, ads, toast, tip, onSave, replaceState };
 })();
