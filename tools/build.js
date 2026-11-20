@@ -10,9 +10,35 @@ global.window = {};
 eval(fs.readFileSync(path.join(OUT, 'assets/core.js'), 'utf8'));
 eval(fs.readFileSync(path.join(OUT, 'assets/lessons.js'), 'utf8'));
 const TO = window.TO, LESSONS = window.LESSONS;
-const ARTICLES = require('./articles.js');
-const octo = (eq, mood) => TO.octo({ mood: mood || 'happy', eq: Object.assign({ color: 'color-coral', hat: null, glasses: null, neck: null }, eq || {}) });
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const MANUAL_ARTICLES = require('./articles.js');
+
+/* ---- Articles approved in TypingOcto SEO Intelligence (content/blog/*.json, committed by the publisher) ---- */
+const CONTENT_DIR = path.join(__dirname, '..', 'content', 'blog');
+const CATEGORY_OF = { 'how-to-type-faster': 'Typing speed', 'good-typing-speed': 'Typing speed', 'typing-speed-chart': 'Typing speed', 'touch-typing-for-beginners': 'Touch typing basics', 'home-row-keys': 'Touch typing basics', 'how-long-to-learn-typing': 'Touch typing basics', 'typing-for-kids': 'Kids & schools', 'typing-posture': 'Ergonomics' };
+const BGS = ['linear-gradient(135deg,#4a2a45,#2a3550)', 'linear-gradient(135deg,#2a4a45,#2a3050)', 'linear-gradient(135deg,#4a3a2a,#2a3550)', 'linear-gradient(135deg,#3a2a4a,#25443a)', 'linear-gradient(135deg,#2a3a4a,#4a2a3a)'];
+const EQS = [{ hat: 'hat-phones' }, { glasses: 'glasses-round' }, { hat: 'hat-cap' }, { hat: 'hat-beanie' }, { hat: 'hat-party' }];
+const hashStr = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+function loadGenerated() {
+  if (!fs.existsSync(CONTENT_DIR)) return [];
+  return fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.json')).sort().map(f => {
+    const a = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, f), 'utf8'));
+    const where = `content/blog/${f}`;
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(a.slug) || a.slug + '.json' !== f) throw new Error(`${where}: invalid slug`);
+    for (const k of ['title', 'seoTitle', 'desc', 'date', 'lead', 'body', 'cta', 'articleId', 'version']) if (a[k] === undefined || a[k] === '') throw new Error(`${where}: missing ${k}`);
+    if (/<\s*(script|iframe|object|embed|style|form|input)\b|\son[a-z]+\s*=|javascript:/i.test(a.body)) throw new Error(`${where}: unsafe HTML in body`);
+    if (!/^[a-z0-9-]+\.html(\?n=\d+)?$|^$/.test(a.cta.href)) throw new Error(`${where}: invalid CTA ${a.cta.href}`);
+    const h = hashStr(a.slug);
+    return Object.assign({ bg: BGS[h % BGS.length], eq: EQS[h % EQS.length], faq: [], sources: [] }, a, { generated: true, leadHtml: esc(a.lead) });
+  });
+}
+const GENERATED = loadGenerated();
+for (const g of GENERATED) if (MANUAL_ARTICLES.some(m => m.slug === g.slug)) throw new Error(`Duplicated blog slug: ${g.slug}`);
+const ARTICLES = MANUAL_ARTICLES.map(a => Object.assign({ category: CATEGORY_OF[a.slug] || 'Typing speed', leadHtml: a.lead }, a))
+  .concat(GENERATED).sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+const CATEGORIES = [...new Set(ARTICLES.map(a => a.category))];
+const catSlug = c => c.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const octo = (eq, mood) => TO.octo({ mood: mood || 'happy', eq: Object.assign({ color: 'color-coral', hat: null, glasses: null, neck: null }, eq || {}) });
 
 const ORG = { '@type': 'Organization', name: 'TypingOcto', url: SITE + '/', logo: SITE + '/assets/icon-512.png' };
 
@@ -52,7 +78,7 @@ function head(o) {
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${R}assets/style.css">
-${ld}
+${o.extraHead ? o.extraHead + '\n' : ''}${ld}
 </head>`;
 }
 const NAV = [['lessons.html', 'Lessons', 'lessons'], ['typing-test.html', 'Typing Test', 'test'], ['practice.html', 'Practice', 'practice'], ['challenge.html', 'Challenge', 'challenge'], ['blog/', 'Blog', 'blog'], ['progress.html', 'My Progress', 'progress']];
@@ -122,7 +148,7 @@ page('index.html', {
         <a class="mode" href="inky.html"><span class="ic">🐙</span><strong>Inky's Den</strong><small>Spend coins on food, hats and new colors.</small></a>
       </div>
       <div class="sec-h" style="margin-top:26px"><h2>From the blog</h2><a href="blog/">All articles →</a></div>
-      <div class="posts">${ARTICLES.slice(0, 3).map(a => postCard(a, '')).join('')}</div>
+      <div class="posts">${ARTICLES.slice(-3).reverse().map(a => postCard(a, '')).join('')}</div>
       ${ad('728x90', 'margin-top:24px')}
     </div>
     <aside class="side">
@@ -145,7 +171,7 @@ page('index.html', {
 
 function postCard(a, R) {
   const words = a.body.replace(/<[^>]+>/g, ' ').split(/\s+/).length;
-  return `<a class="post" href="${R}blog/${a.slug}.html"><div class="thumb" style="--tbg:${a.bg}">${octo(a.eq)}</div><div class="body"><h2>${esc(a.title)}</h2><p>${esc(a.desc)}</p><small>${fmtDate(a.date)} · ${Math.max(3, Math.round(words / 220))} min read</small></div></a>`;
+  return `<a class="post" href="${R}blog/${a.slug}.html" data-cat="${catSlug(a.category)}" data-q="${esc((a.title + ' ' + a.desc + ' ' + a.category).toLowerCase())}"><div class="thumb" style="--tbg:${a.bg}">${a.image ? `<img src="${esc(a.image.src)}" alt="${esc(a.image.alt)}" loading="lazy" style="width:100%;height:100%;object-fit:cover">` : octo(a.eq)}</div><div class="body"><span class="post-cat">${esc(a.category)}</span><h2>${esc(a.title)}</h2><p>${esc(a.desc)}</p><small>${fmtDate(a.date)} · ${Math.max(3, Math.round(words / 220))} min read</small></div></a>`;
 }
 function fmtDate(d) { return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }); }
 
@@ -247,13 +273,17 @@ ${seo(`<h1 style="font-size:22px">Meet Inky, your typing buddy</h1><p>Inky is a 
 page('blog/index.html', {
   title: 'Typing Blog: Tips to Type Faster | TypingOcto',
   desc: 'Guides and tips to learn touch typing, improve your WPM, sit with good posture and help kids learn to type.', active: 'blog', pri: 0.8,
-  jsonld: [{ '@type': 'Blog', name: 'TypingOcto Blog', url: SITE + '/blog/', publisher: ORG, blogPost: ARTICLES.map(a => ({ '@type': 'BlogPosting', headline: a.title, url: `${SITE}/blog/${a.slug}.html`, datePublished: a.date })) }]
+  extraHead: `<link rel="alternate" type="application/rss+xml" title="TypingOcto Blog" href="${SITE}/blog/feed.xml">`,
+  jsonld: [{ '@type': 'Blog', name: 'TypingOcto Blog', url: SITE + '/blog/', publisher: ORG, blogPost: ARTICLES.map(a => ({ '@type': 'BlogPosting', headline: a.title, url: `${SITE}/blog/${a.slug}.html`, datePublished: a.date, articleSection: a.category })) },
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Blog', item: SITE + '/blog/' }] }]
 }, `<main class="wrap">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="../">Home</a> › Blog</nav>
   <section class="blog-hero"><div><div class="eyebrow">TypingOcto Blog</div><h1>Learn to type faster</h1><p>Simple, practical guides about touch typing, typing speed, posture and learning to type with kids.</p></div>${octo({ glasses: 'glasses-round', hat: 'hat-beanie' })}</section>
-  <div class="posts">${ARTICLES.slice().reverse().map(a => postCard(a, '../')).join('')}</div>
+  <div class="blog-tools"><input type="search" id="blogSearch" placeholder="Search articles…" aria-label="Search articles"><nav class="cats" aria-label="Categories"><button class="on" data-cat="">All</button>${CATEGORIES.map(c => `<button data-cat="${catSlug(c)}">${esc(c)}</button>`).join('')}</nav></div>
+  <div class="posts" id="blogPosts">${ARTICLES.slice().reverse().map(a => postCard(a, '../')).join('')}</div>
+  <p class="muted" id="blogEmpty" hidden>No articles match your search.</p>
   ${ad('728x90', 'margin-top:26px')}
-</main>`);
+</main>`, `(function(){var q=document.getElementById('blogSearch'),cat='',posts=[].slice.call(document.querySelectorAll('#blogPosts .post'));function f(){var t=q.value.trim().toLowerCase(),n=0;posts.forEach(function(p){var ok=(!cat||p.dataset.cat===cat)&&(!t||p.dataset.q.indexOf(t)>-1);p.hidden=!ok;if(ok)n++;});document.getElementById('blogEmpty').hidden=n>0;}q.addEventListener('input',f);document.querySelectorAll('.cats button').forEach(function(b){b.addEventListener('click',function(){cat=b.dataset.cat;document.querySelectorAll('.cats button').forEach(function(x){x.classList.toggle('on',x===b)});f();});});})();`);
 
 ARTICLES.forEach((a, idx) => {
   const toc = [];
@@ -261,16 +291,19 @@ ARTICLES.forEach((a, idx) => {
   // put an ad + CTA roughly in the middle
   const parts = body.split('<h2');
   const mid = Math.ceil(parts.length / 2);
-  const cta = R => `<aside class="cta">${octo(a.eq)}<div><strong>${esc(a.cta.title)}</strong><p>${esc(a.cta.text)}</p></div><a class="btn primary" href="../${a.cta.href}">${esc(a.cta.btn)} →</a></aside>`;
+  const cta = R => `<aside class="cta">${octo(a.eq)}<div><strong>${esc(a.cta.title)}</strong><p>${esc(a.cta.text)}</p></div><a class="btn primary" href="../${a.cta.href}" data-cta="article">${esc(a.cta.btn)} →</a></aside>`;
+  const sources = a.sources && a.sources.length ? `<h2 id="sources">Sources</h2><ul class="sources">${a.sources.map(s => `<li><a href="${esc(s.url)}" rel="noopener">${esc(s.title || s.url)}</a></li>`).join('')}</ul>` : '';
+  const figure = a.image ? `<figure class="cover-img"><img src="${esc(a.image.src)}" alt="${esc(a.image.alt)}" loading="eager" width="1200" height="630"><figcaption>${esc(a.image.credit || '')}${a.image.license && a.image.license !== 'own' ? ` · ${esc(a.image.license)}` : ''}</figcaption></figure>` : `<div class="cover" style="--tbg:${a.bg}" role="img" aria-label="Illustration of Inky the octopus">${octo(a.eq)}</div>`;
   const withMid = parts.slice(0, mid).join('<h2') + ad('728x90', 'margin:26px 0') + '<h2' + parts.slice(mid).join('<h2');
-  const words = a.body.replace(/<[^>]+>/g, ' ').split(/\s+/).length;
+  const words = a.words || a.body.replace(/<[^>]+>/g, ' ').split(/\s+/).length;
   const mins = Math.max(3, Math.round(words / 220));
-  const related = ARTICLES.filter(x => x !== a).sort((x, y) => ((ARTICLES.indexOf(x) - idx + 8) % 8) - ((ARTICLES.indexOf(y) - idx + 8) % 8)).slice(0, 3);
+  const related = ARTICLES.filter(x => x !== a).sort((x, y) => (y.category === a.category) - (x.category === a.category) || (x.date < y.date ? 1 : -1)).slice(0, 3);
   const faq = a.faq && a.faq.length ? `<h2 id="faq">Frequently asked questions</h2><div class="faq">${a.faq.map(([q, ans]) => `<details><summary>${esc(q)}</summary><p>${esc(ans)}</p></details>`).join('')}</div>` : '';
   page(`blog/${a.slug}.html`, {
-    title: `${a.seoTitle} | TypingOcto`, ogTitle: a.title, desc: a.desc, type: 'article', active: 'blog', lastmod: a.date, pri: 0.7,
+    title: `${a.seoTitle} | TypingOcto`, ogTitle: a.title, desc: a.desc, type: 'article', active: 'blog', lastmod: a.updated || a.date, pri: 0.7,
+    extraHead: `<meta property="article:published_time" content="${a.date}"><meta property="article:section" content="${esc(a.category)}"><link rel="alternate" type="application/rss+xml" title="TypingOcto Blog" href="${SITE}/blog/feed.xml">${a.generated ? `\n<meta name="to-article" content="${esc(a.articleId)}:${a.version}">` : ''}`,
     jsonld: [
-      { '@type': 'Article', headline: a.title, description: a.desc, image: SITE + '/assets/og-image.png', datePublished: a.date, dateModified: a.date, author: { '@type': 'Organization', name: 'TypingOcto Team', url: SITE + '/about.html' }, publisher: ORG, mainEntityOfPage: `${SITE}/blog/${a.slug}.html`, wordCount: words, inLanguage: 'en' },
+      { '@type': 'Article', headline: a.title, description: a.desc, image: a.image ? a.image.src : SITE + '/assets/og-image.png', datePublished: a.date, dateModified: a.updated || a.date, articleSection: a.category, keywords: a.primaryKeyword ? [a.primaryKeyword].concat(a.secondaryKeywords || []).join(', ') : undefined, author: { '@type': 'Organization', name: 'TypingOcto Team', url: SITE + '/about.html' }, publisher: ORG, mainEntityOfPage: `${SITE}/blog/${a.slug}.html`, wordCount: words, inLanguage: 'en' },
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Blog', item: SITE + '/blog/' }, { '@type': 'ListItem', position: 3, name: a.title, item: `${SITE}/blog/${a.slug}.html` }] }
     ].concat(a.faq ? [{ '@type': 'FAQPage', mainEntity: a.faq.map(([q, ans]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: ans } })) }] : [])
   }, `<main class="wrap">
@@ -278,14 +311,15 @@ ARTICLES.forEach((a, idx) => {
     <nav class="crumbs" aria-label="Breadcrumb"><a href="../">Home</a> › <a href="./">Blog</a> › ${esc(a.title)}</nav>
     <header>
       <h1>${esc(a.title)}</h1>
-      <div class="meta"><span>By TypingOcto Team</span><span>·</span><time datetime="${a.date}">${fmtDate(a.date)}</time><span>·</span><span>${mins} min read</span></div>
-      <div class="cover" style="--tbg:${a.bg}" role="img" aria-label="Illustration of Inky the octopus">${octo(a.eq)}</div>
-      <p class="lead">${a.lead}</p>
+      <div class="meta"><span>By TypingOcto Team</span><span>·</span><span>${esc(a.category)}</span><span>·</span><time datetime="${a.date}">${fmtDate(a.date)}</time><span>·</span><span>${mins} min read</span></div>
+      ${figure}
+      <p class="lead">${a.leadHtml}</p>
     </header>
     <nav class="toc" aria-label="Table of contents"><strong>In this article</strong><ol>${toc.map(([id, t]) => `<li><a href="#${id}">${t.replace(/<[^>]+>/g, '').replace(/^\d+\.\s*/, '')}</a></li>`).join('')}${faq ? '<li><a href="#faq">FAQ</a></li>' : ''}</ol></nav>
     ${withMid}
     ${cta()}
     ${faq}
+    ${sources}
   </article>
   <section class="related article"><h2>Keep reading</h2><div class="posts">${related.map(r => postCard(r, '../')).join('')}</div></section>
 </main>`);
@@ -310,7 +344,9 @@ page('privacy.html', { title: 'Privacy Policy &amp; Cookies | TypingOcto', desc:
 <h1>Privacy policy &amp; cookies</h1>
 <p><em>Last updated: ${fmtDate(TODAY)}</em></p>
 <h2>Your typing progress</h2>
-<p>TypingOcto does not require an account. Your lessons, stars, statistics and your octopus are stored only in your browser (localStorage). We never receive them. Clearing your browser data deletes them.</p>
+<p>TypingOcto does not require an account. By default your lessons, stars, statistics and your octopus are stored only in your browser (localStorage) and we never receive them. Clearing your browser data deletes them.</p>
+<h2>Optional Google sign-in</h2>
+<p>If you choose to sign in with Google, we use Google Firebase to store a copy of the same progress data (lessons, statistics, coins and your octopus) linked to your account, so you can continue on another device. We receive your Google account name and email address only to identify your account; we do not use them for marketing. You can sign out at any time, and you can ask us to delete your synced progress by emailing <strong>hello@typingocto.com</strong>. Children should ask a parent or guardian before signing in.</p>
 <h2>Advertising</h2>
 <p>We show ads to keep TypingOcto free. Third-party vendors, including Google, use cookies to serve ads based on your previous visits to this and other websites. Google's use of advertising cookies enables it and its partners to serve ads based on your visits to this site and/or other sites on the Internet. You can opt out of personalised advertising in <a href="https://adssettings.google.com" rel="nofollow noopener">Google Ads Settings</a>.</p>
 <h2>Analytics</h2>
@@ -325,6 +361,16 @@ page('privacy.html', { title: 'Privacy Policy &amp; Cookies | TypingOcto', desc:
 
 page('404.html', { title: 'Page not found | TypingOcto', desc: 'This page does not exist.', noindex: true },
 `<main class="prose" style="text-align:center">${octo({}, 'sad')}<h1>Oops, page not found</h1><p>Inky looked everywhere with all eight arms, but this page doesn't exist.</p><p><a class="btn primary" href="/">Back to home</a> <a class="btn" href="/lessons.html">Typing lessons</a></p></main>`);
+
+/* ---------------- RSS feed ---------------- */
+const xmlEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+fs.writeFileSync(path.join(OUT, 'blog/feed.xml'), `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>
+<title>TypingOcto Blog</title><link>${SITE}/blog/</link><description>Guides and tips to learn touch typing and type faster.</description><language>en</language>
+<atom:link href="${SITE}/blog/feed.xml" rel="self" type="application/rss+xml"/>
+${ARTICLES.slice().reverse().slice(0, 30).map(a => `<item><title>${xmlEsc(a.title)}</title><link>${SITE}/blog/${a.slug}.html</link><guid isPermaLink="true">${SITE}/blog/${a.slug}.html</guid><pubDate>${new Date(a.date + 'T09:00:00Z').toUTCString()}</pubDate><category>${xmlEsc(a.category)}</category><description>${xmlEsc(a.desc)}</description></item>`).join('\n')}
+</channel></rss>
+`);
 
 /* ---------------- sitemap, robots, manifest ---------------- */
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
