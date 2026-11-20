@@ -21,7 +21,7 @@ const EQS = [{ hat: 'hat-phones' }, { glasses: 'glasses-round' }, { hat: 'hat-ca
 const hashStr = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
 function loadGenerated() {
   if (!fs.existsSync(CONTENT_DIR)) return [];
-  return fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.json')).sort().map(f => {
+  return fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.json') && !f.startsWith('_')).sort().map(f => {
     const a = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, f), 'utf8'));
     const where = `content/blog/${f}`;
     if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(a.slug) || a.slug + '.json' !== f) throw new Error(`${where}: invalid slug`);
@@ -33,9 +33,11 @@ function loadGenerated() {
   });
 }
 const GENERATED = loadGenerated();
-for (const g of GENERATED) if (MANUAL_ARTICLES.some(m => m.slug === g.slug)) throw new Error(`Duplicated blog slug: ${g.slug}`);
-const ARTICLES = MANUAL_ARTICLES.map(a => Object.assign({ category: CATEGORY_OF[a.slug] || 'Typing speed', leadHtml: a.lead }, a))
-  .concat(GENERATED).sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+// Articles removed from the dashboard ("Eliminar"): content/blog/_deleted.json = ["slug", ...]
+const DELETED = new Set(fs.existsSync(path.join(CONTENT_DIR, '_deleted.json')) ? JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, '_deleted.json'), 'utf8')) : []);
+// A dashboard version of a hand-written article (same slug) replaces it.
+const ARTICLES = MANUAL_ARTICLES.filter(m => !GENERATED.some(g => g.slug === m.slug)).map(a => Object.assign({ category: CATEGORY_OF[a.slug] || 'Typing speed', leadHtml: a.lead }, a))
+  .concat(GENERATED).filter(a => !DELETED.has(a.slug)).sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
 const CATEGORIES = [...new Set(ARTICLES.map(a => a.category))];
 const catSlug = c => c.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const octo = (eq, mood) => TO.octo({ mood: mood || 'happy', eq: Object.assign({ color: 'color-coral', hat: null, glasses: null, neck: null }, eq || {}) });
@@ -362,6 +364,10 @@ page('privacy.html', { title: 'Privacy Policy &amp; Cookies | TypingOcto', desc:
 page('404.html', { title: 'Page not found | TypingOcto', desc: 'This page does not exist.', noindex: true },
 `<main class="prose" style="text-align:center">${octo({}, 'sad')}<h1>Oops, page not found</h1><p>Inky looked everywhere with all eight arms, but this page doesn't exist.</p><p><a class="btn primary" href="/">Back to home</a> <a class="btn" href="/lessons.html">Typing lessons</a></p></main>`);
 
+/* ---------------- blog inventory for the SEO dashboard ---------------- */
+fs.writeFileSync(path.join(OUT, 'blog/index.json'), JSON.stringify(ARTICLES.slice().reverse().map(a => ({ slug: a.slug, title: a.title, date: a.date, category: a.category, url: `${SITE}/blog/${a.slug}.html`, source: a.generated ? 'dashboard' : 'manual', articleId: a.articleId || null, version: a.version || null })), null, 2));
+const inky = require('./inky-library.js')(TO, OUT);
+
 /* ---------------- RSS feed ---------------- */
 const xmlEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 fs.writeFileSync(path.join(OUT, 'blog/feed.xml'), `<?xml version="1.0" encoding="UTF-8"?>
@@ -381,4 +387,4 @@ ${pages.map(p => `  <url><loc>${p.loc}</loc><lastmod>${p.lastmod}</lastmod><prio
 fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
 fs.writeFileSync(path.join(OUT, 'site.webmanifest'), JSON.stringify({ name: 'TypingOcto', short_name: 'TypingOcto', start_url: '/', display: 'standalone', background_color: '#15111e', theme_color: '#15111e', icons: [{ src: '/assets/icon-192.png', sizes: '192x192', type: 'image/png' }, { src: '/assets/icon-512.png', sizes: '512x512', type: 'image/png' }] }, null, 2));
 fs.writeFileSync(path.join(OUT, 'assets/icon.svg'), octo({ hat: 'hat-phones' }).replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"').replace(/ class="[^"]*"/, ''));
-console.log('Built', pages.length, 'indexable pages + lesson, progress, 404');
+console.log('Built', pages.length, 'indexable pages + lesson, progress, 404;', inky, 'Inky images');
