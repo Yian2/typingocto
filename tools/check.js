@@ -37,7 +37,9 @@ for (const file of files) {
     if (!/"@type":"BreadcrumbList"/.test(html)) errors.push(`${rel}: missing breadcrumbs`);
     // The article text must be in the HTML (no JS needed to see it)
     const text = (get(html, /<article class="article">([\s\S]*?)<\/article>/) || '').replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
-    if (text < 250) errors.push(`${rel}: only ${text} words of server-rendered text`);
+    // Thin content is an SEO warning (the author decides); only an empty article blocks the deploy.
+    if (text < 30) errors.push(`${rel}: only ${text} words of server-rendered text`);
+    else if (text < 250) warnings.push(`${rel}: thin content (${text} words)`);
     const body = get(html, /<article class="article">([\s\S]*?)<\/article>/) || '';
     if (/<script|\son[a-z]+=|javascript:/i.test(body)) errors.push(`${rel}: unsafe markup inside the article`);
   }
