@@ -44,7 +44,7 @@ for (const file of files) {
   // internal links point to files that exist
   for (const m of html.matchAll(/href="([^"#?]+)(?:[?#][^"]*)?"/g)) {
     const h = m[1];
-    if (/^(https?:|mailto:|\/\/)/.test(h) || h.endsWith('.css') || h.endsWith('.webmanifest') || /\.(png|svg|xml|ico)$/.test(h)) continue;
+    if (/^(https?:|mailto:|\/\/)/.test(h) || h.startsWith('/assets/') || h.endsWith('.css') || h.endsWith('.webmanifest') || /\.(png|svg|xml|ico)$/.test(h)) continue;
     let target = h.startsWith('/') ? path.join(OUT, h) : path.join(path.dirname(file), h);
     if (h.endsWith('/') || fs.existsSync(target) && fs.statSync(target).isDirectory()) target = path.join(target, 'index.html');
     if (!fs.existsSync(target)) errors.push(`${rel}: broken internal link ${h}`);
@@ -62,6 +62,7 @@ if (fs.readFileSync(path.join(OUT, 'CNAME'), 'utf8').trim() !== 'typingocto.com'
 if (!fs.existsSync(path.join(OUT, '404.html'))) errors.push('404.html missing');
 if (!fs.existsSync(path.join(OUT, '.nojekyll'))) errors.push('.nojekyll missing');
 if (!fs.existsSync(path.join(OUT, 'blog/feed.xml'))) errors.push('RSS feed missing');
+if (!fs.existsSync(path.join(OUT, 'assets/inky/index.json'))) errors.push('Inky library missing');
 
 warnings.forEach(w => console.warn('WARN ', w));
 errors.forEach(e => console.error('ERROR', e));
