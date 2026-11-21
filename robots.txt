@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://typingocto.com/sitemap.xml
