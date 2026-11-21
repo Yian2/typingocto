@@ -1,0 +1,44 @@
+{
+  "articleId": "o45DWX2aM7ums9ydmvYX",
+  "version": 1,
+  "hash": "23b48184488454870b31fcf0ea4df8c0f147e4efdb8915185f1519658ccff3c0",
+  "generated": true,
+  "slug": "meet-the-typing-octopus-inky",
+  "title": "Meet the Typing Octopus: How Inky Makes Learning to Type Fun",
+  "seoTitle": "Meet the Typing Octopus: Learn to Type with Inky",
+  "desc": "Discover how the typing octopus, Inky, makes learning touch typing fun and engaging with rewards, feeding mechanics, and free typing lessons.",
+  "date": "2026-11-21",
+  "updated": "2026-11-21",
+  "category": "Practice & exercises",
+  "primaryKeyword": "typing octopus",
+  "secondaryKeywords": [
+    "learn touch typing",
+    "free typing tutor",
+    "typing practice games"
+  ],
+  "lead": "Meet Inky, the typing octopus who makes learning to type fun. Discover how practicing your keyboard skills lets you feed, dress, and care for your pet octopus.",
+  "body": "<h2>Who Is the Typing Octopus?</h2>\n<p>When you are learning to type, staying motivated can be the hardest part. That is why TypingOcto features a virtual pet inspired by a typing octopus named Inky. Instead of staring at dry drills or endless text prompts, every lesson, speed test, and practice session you complete earns you coins. You can use these coins to buy food and fun accessories for Inky. If you skip practice for a few days, Inky gets hungry, giving you a friendly nudge to return to the keyboard.</p>\n<h2>Turn Typing Practice into a Game</h2>\n<p>Gamifying your daily routine helps build consistency. Whether you are starting from scratch or refining your technique, earning rewards keeps practice sessions engaging. You can dive straight into structured learning with our <a href=\"../lessons.html\" data-cta=\"1\">100 free touch typing lessons</a> spread across 10 units. Each lesson introduces just a few new keys at a time, supported by a colour-coded virtual keyboard that shows you exactly which finger to use.</p>\n<h2>Track Your Progress and Fix Weak Keys</h2>\n<p>Caring for a virtual pet is fun, but seeing your actual typing skills improve is even better. As you complete exercises, your stats are saved right in your browser without requiring an account. You can visit your <a href=\"../progress.html\" data-cta=\"1\">progress page</a> to view your words-per-minute (WPM) chart and check out a detailed keyboard error heatmap. This heatmap highlights the exact letters you struggle with most, allowing you to target them using specialized practice modes.</p>\n<h2>Earn Exclusive Prizes in Weekly Challenges</h2>\n<p>Beyond feeding Inky with standard lesson coins, active typists can participate in weekly challenges. These events offer exclusive prizes, such as unique hats and accessories to dress up your pet octopus. It adds a fun community element to your daily routine, encouraging you to push your speed and accuracy further every week. If you want to check your current baseline before jumping in, you can take a quick <a href=\"../typing-test.html\" data-cta=\"1\">typing speed test</a>.</p>",
+  "words": 320,
+  "faq": [
+    [
+      "What is the typing octopus on TypingOcto?",
+      "The typing octopus is Inky, a virtual pet on TypingOcto that you feed and dress using coins earned by completing typing lessons, tests, and practice sessions."
+    ],
+    [
+      "Do I need to pay to use TypingOcto and care for Inky?",
+      "No, TypingOcto is completely free. All 100 lessons, practice modes, and features like Inky are available at no cost."
+    ],
+    [
+      "What happens if I stop practicing for a few days?",
+      "Inky gets hungry if you do not practice for a few days, giving you a fun reminder to jump back onto the keyboard and earn more food."
+    ]
+  ],
+  "cta": {
+    "href": "inky.html",
+    "title": "Meet Inky",
+    "text": "Start typing today, earn coins, and take care of your very own typing octopus.",
+    "btn": "Visit Inky's Room"
+  },
+  "sources": [],
+  "image": null
+}
