@@ -1,0 +1,45 @@
+{
+  "articleId": "agSfphwB8JbqG99z2tfu",
+  "version": 1,
+  "hash": "b3d1cf70b3d360e9322290253bc300b1594ebe0ea61d7e2c3ab03375f126d82b",
+  "generated": true,
+  "slug": "what-is-octa-typing",
+  "title": "What Is Octa Typing? Discover Free Touch Typing with Inky",
+  "seoTitle": "What Is Octa Typing? Free Touch Typing Course",
+  "desc": "Discover octa typing with TypingOcto. Learn touch typing through 100 free lessons, practice modes, and earn rewards for Inky the pet octopus.",
+  "date": "2026-11-23",
+  "updated": "2026-11-23",
+  "category": "Touch typing basics",
+  "primaryKeyword": "octa typing",
+  "secondaryKeywords": [
+    "typingocto",
+    "free typing tutor",
+    "touch typing lessons",
+    "typing practice"
+  ],
+  "lead": "Curious about octa typing? Explore TypingOcto, a free typing tutor featuring 100 touch typing lessons, custom practice modes, and Inky the pet octopus.",
+  "body": "<h2>Introduction to Octa Typing</h2>\n<p>When people search for octa typing, they are usually looking for TypingOcto—a completely free web-based typing tutor designed to help absolute beginners and experienced typists alike improve their speed and accuracy. Learning to type without looking down at the keyboard is an essential modern skill, and doing it without spending money or downloading software makes it accessible to everyone. Whether you are a student, an adult returning to practice, or a parent helping your child learn, structured repetition is the key to building muscle memory.</p>\n<p>To start building those foundational skills right away, you can dive straight into <a href=\"../lesson.html?n=1\" data-cta=\"1\">Lesson 1</a> and learn the home row keys without needing to create an account.</p>\n<h2>How the 100 Free Lessons Work</h2>\n<p>The core of the platform consists of 100 structured lessons divided into 10 units. Each unit introduces just a few new keys at a time so you never feel overwhelmed. A visual colour-coded keyboard on the screen shows you exactly which finger to use for every keystroke.</p>\n<ul><li>Lessons require at least 85% accuracy to pass.</li><li>Achieving three stars requires 96% accuracy combined with your target speed.</li><li>Progress is automatically saved in your browser, meaning you can close the tab and return later without losing your spot.</li></ul>\n<p>For a complete overview of the curriculum, visit the <a href=\"../lessons.html\" data-cta=\"1\">typing lessons</a> page.</p>\n<h2>Targeted Practice Modes for Speed and Accuracy</h2>\n<p>Beyond the standard lessons, building real-world typing proficiency requires targeted drills. The platform offers dedicated practice options that focus on common English words, numbers, and full sentences. If you keep making mistakes on specific letter combinations, the Weak keys mode automatically generates custom exercises using the exact letters you miss most often.</p>\n<div class=\"tip\"><p>Tip: Spend five minutes every day on your weak keys before tackling standard lessons to iron out persistent typing errors quickly.</p></div>\n<h2>Meet Inky: The Pet Octopus That Keeps You Motivated</h2>\n<p>Practising daily can sometimes feel tedious, which is why the platform introduces a gamified element centered around a pet octopus named Inky. Every lesson, speed test, and practice session rewards you with coins. You can use these coins to buy food and fun accessories for Inky.</p>\n<ul><li>Inky gets hungry if you skip practice for a few days, giving you a friendly daily reminder to return.</li><li>Weekly challenges offer exclusive prizes like unique hats for your virtual pet.</li></ul>\n<p>Learn more about how gamification helps habit-building on the <a href=\"../inky.html\" data-cta=\"1\">Inky page</a>.</p>\n<h2>Tracking Your Progress and WPM</h2>\n<p>Measuring your growth is vital when learning touch typing. As you complete exercises, the system tracks your words per minute (WPM) and highlights your problem areas on a visual keyboard error heatmap. You can also take timed speed checks ranging from quick bursts to extended runs whenever you want to test your limits.</p>\n<p>Check your current statistics and view your personal WPM growth chart anytime on your <a href=\"../progress.html\" data-cta=\"1\">progress page</a>.</p>",
+  "words": 475,
+  "faq": [
+    [
+      "Is TypingOcto completely free?",
+      "Yes, all 100 lessons, practice modes, typing tests, and features are completely free with no hidden paywalls."
+    ],
+    [
+      "Do I need to create an account to save my progress?",
+      "No account is required. Your progress is automatically saved directly in your web browser. Optional Google sign-in is available if you want to sync your progress across multiple devices."
+    ],
+    [
+      "How is typing speed calculated?",
+      "Typing speed is measured in WPM (words per minute), where one standard word is defined as exactly 5 characters including spaces."
+    ]
+  ],
+  "cta": {
+    "href": "lessons.html",
+    "title": "Start Learning Today",
+    "text": "Ready to master touch typing? Explore 100 free lessons and start building real muscle memory now.",
+    "btn": "View Lessons"
+  },
+  "sources": [],
+  "image": null
+}
