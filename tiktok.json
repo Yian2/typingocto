@@ -1,0 +1,253 @@
+{
+ "version": 1,
+ "tip": "Añade un sonido en tendencia (volumen bajo) desde la app de TikTok antes de publicar.",
+ "clips": [
+  {
+   "id": "tt-01",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-01.mp4",
+   "hook": "POV: you finally stopped looking at the keyboard 👀",
+   "caption": "Took me a while but the octopus was right: eyes on the screen, fingers on the home row 🐙 What's your WPM? Practice free at typingocto.com (link in bio)",
+   "hashtags": [
+    "#typing",
+    "#touchtyping",
+    "#typingtest",
+    "#wpm",
+    "#learnontiktok",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-02",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-02.mp4",
+   "hook": "Typing ASMR on a free typing trainer",
+   "caption": "No ads, no signup, just you and the keys ⌨️ Free lessons at typingocto.com — link in bio. Follow for daily typing practice 🐙",
+   "hashtags": [
+    "#keyboardasmr",
+    "#asmr",
+    "#typing",
+    "#satisfying",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-03",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-03.mp4",
+   "hook": "Day 1 of learning to touch type",
+   "caption": "Starting from zero with free lessons 🐙 Follow to see how fast I get. Join me at typingocto.com (link in bio) and comment your starting WPM 👇",
+   "hashtags": [
+    "#day1",
+    "#touchtyping",
+    "#learntotype",
+    "#studytok",
+    "#productivity",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-04",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-04.mp4",
+   "hook": "Can you keep up?",
+   "caption": "Speed comes from accuracy, not from rushing 💨 Try the free typing test at typingocto.com and drop your score below 👇",
+   "hashtags": [
+    "#typingspeed",
+    "#typingtest",
+    "#wpm",
+    "#challenge",
+    "#typing",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-05",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-05.mp4",
+   "hook": "This free site turned typing into a game",
+   "caption": "Lessons, challenges and a little octopus cheering you on 🐙🎮 It's 100% free: typingocto.com (link in bio)",
+   "hashtags": [
+    "#typinggame",
+    "#learnontiktok",
+    "#edutok",
+    "#freewebsite",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-06",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-06.mp4",
+   "hook": "Home row only. No peeking.",
+   "caption": "F and J have little bumps for a reason 👆 Keep your fingers there and let them find the keys. Free lessons at typingocto.com",
+   "hashtags": [
+    "#homerow",
+    "#touchtyping",
+    "#typingtips",
+    "#learntotype",
+    "#studytips",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-07",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-07.mp4",
+   "hook": "Satisfying keyboard sounds (headphones on)",
+   "caption": "Pure keyboard sounds 🎧 Save this for your study session. Practise your own typing free at typingocto.com",
+   "hashtags": [
+    "#keyboardsounds",
+    "#asmr",
+    "#satisfying",
+    "#studywithme",
+    "#typing",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-08",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-08.mp4",
+   "hook": "How fast do you type? Comment your WPM",
+   "caption": "Be honest 👀 Average is around 40 WPM. Take the free test at typingocto.com and comment your score — I'll reply to the fastest 🏆",
+   "hashtags": [
+    "#wpm",
+    "#typingtest",
+    "#typingspeed",
+    "#comment",
+    "#challenge",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-09",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-09.mp4",
+   "hook": "Every lesson ends with this little guy",
+   "caption": "Every finished lesson gets a reaction from Inky 🐙✨ Meet him at typingocto.com (free, link in bio)",
+   "hashtags": [
+    "#octopus",
+    "#cute",
+    "#typing",
+    "#learnontiktok",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-10",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-10.mp4",
+   "hook": "Typing test speedrun",
+   "caption": "One minute, no mistakes allowed ⏱️ Your turn: free typing test at typingocto.com. Comment your WPM 👇",
+   "hashtags": [
+    "#speedrun",
+    "#typingtest",
+    "#wpm",
+    "#keyboard",
+    "#challenge",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-11",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-11.mp4",
+   "hook": "100% accuracy or nothing",
+   "caption": "Slow is smooth, smooth is fast 🎯 Train accuracy first with free lessons at typingocto.com",
+   "hashtags": [
+    "#accuracy",
+    "#typingtips",
+    "#touchtyping",
+    "#productivity",
+    "#typing",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-12",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-12.mp4",
+   "hook": "When the typing test says 100% accuracy",
+   "caption": "That feeling when every key is green ✅ Try to beat it at typingocto.com (free). Tag a friend who types with two fingers 😂",
+   "hashtags": [
+    "#typingtest",
+    "#satisfying",
+    "#wpm",
+    "#relatable",
+    "#typing",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-13",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-13.mp4",
+   "hook": "Learning to type without looking",
+   "caption": "It feels slow for a few days, then it clicks ⌨️ Free step-by-step lessons at typingocto.com (link in bio)",
+   "hashtags": [
+    "#touchtyping",
+    "#learntotype",
+    "#studytok",
+    "#selfimprovement",
+    "#typing",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-14",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-14.mp4",
+   "hook": "Free typing lessons that actually work",
+   "caption": "Short lessons, live stats and progress you can see 📈 All free at typingocto.com. Follow for daily tips 🐙",
+   "hashtags": [
+    "#freelessons",
+    "#learnontiktok",
+    "#edutok",
+    "#typing",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-15",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-15.mp4",
+   "hook": "A typing site with lessons, blog AND stats",
+   "caption": "Guides on WPM, accuracy and practice routines + your own stats 📊 typingocto.com — free, link in bio",
+   "hashtags": [
+    "#typing",
+    "#productivity",
+    "#studytools",
+    "#wpm",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-16",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-16.mp4",
+   "hook": "Late night typing practice",
+   "caption": "10 minutes a day is enough to see progress 🌙 Practice free at typingocto.com. What time do you study? 👇",
+   "hashtags": [
+    "#nightroutine",
+    "#studywithme",
+    "#typingpractice",
+    "#productivity",
+    "#typing",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-17",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-17.mp4",
+   "hook": "My fingers after one week of practice",
+   "caption": "Consistency > talent ⌨️🔥 Start your own week at typingocto.com and come back to tell me your WPM",
+   "hashtags": [
+    "#progress",
+    "#typingspeed",
+    "#glowup",
+    "#learntotype",
+    "#typing",
+    "#typingocto"
+   ]
+  },
+  {
+   "id": "tt-18",
+   "video": "https://raw.githubusercontent.com/Yian2/typingocto/tiktok-media/tt-18.mp4",
+   "hook": "Typing ASMR. No talking.",
+   "caption": "Just keys 🎧 Want to type like this? Free lessons at typingocto.com (link in bio)",
+   "hashtags": [
+    "#asmr",
+    "#keyboardasmr",
+    "#notalking",
+    "#satisfying",
+    "#typing",
+    "#typingocto"
+   ]
+  }
+ ]
+}
