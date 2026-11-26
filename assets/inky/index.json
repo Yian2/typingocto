@@ -1,0 +1,142 @@
+[
+  {
+    "id": "happy-classic",
+    "src": "/assets/inky/happy-classic.svg",
+    "alt": "Inky happy",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "headphones",
+    "src": "/assets/inky/headphones.svg",
+    "alt": "Inky with headphones",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "smart-glasses",
+    "src": "/assets/inky/smart-glasses.svg",
+    "alt": "Inky with smart glasses",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "sunglasses",
+    "src": "/assets/inky/sunglasses.svg",
+    "alt": "Inky with sunglasses",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "party",
+    "src": "/assets/inky/party.svg",
+    "alt": "Inky with a party hat",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "beanie",
+    "src": "/assets/inky/beanie.svg",
+    "alt": "Inky with a cozy beanie and scarf",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "sport-cap",
+    "src": "/assets/inky/sport-cap.svg",
+    "alt": "Inky with a sport cap",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "top-hat",
+    "src": "/assets/inky/top-hat.svg",
+    "alt": "Inky with a top hat and bow tie",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "crown",
+    "src": "/assets/inky/crown.svg",
+    "alt": "Inky with a royal crown",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "wizard",
+    "src": "/assets/inky/wizard.svg",
+    "alt": "Inky the wizard",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "pirate",
+    "src": "/assets/inky/pirate.svg",
+    "alt": "Inky the pirate",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "flowers",
+    "src": "/assets/inky/flowers.svg",
+    "alt": "Inky with a flower crown",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "santa",
+    "src": "/assets/inky/santa.svg",
+    "alt": "Inky with a Santa hat",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "viking",
+    "src": "/assets/inky/viking.svg",
+    "alt": "Inky the viking",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "chef",
+    "src": "/assets/inky/chef.svg",
+    "alt": "Inky the chef",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "student",
+    "src": "/assets/inky/student.svg",
+    "alt": "Inky studying with glasses and headphones",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "calm",
+    "src": "/assets/inky/calm.svg",
+    "alt": "Inky calm",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "hungry",
+    "src": "/assets/inky/hungry.svg",
+    "alt": "Inky hungry",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "sad",
+    "src": "/assets/inky/sad.svg",
+    "alt": "Inky sad",
+    "license": "own",
+    "credit": "TypingOcto"
+  },
+  {
+    "id": "golden",
+    "src": "/assets/inky/golden.svg",
+    "alt": "Golden Inky",
+    "license": "own",
+    "credit": "TypingOcto"
+  }
+]
